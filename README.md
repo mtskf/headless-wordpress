@@ -1,9 +1,25 @@
- would like to leave 'functions.php' alone.
+# functions.php
+It is recommended to point Access-Control-Allow-Origin to a specific domain.
 
- # plug-in
+- functions.php (default: wild card `*` is set)
+```
+<?php
+function my_customize_rest_cors() {
+  remove_filter( 'rest_pre_serve_request', 'rest_send_cors_headers' );
+  add_filter( 'rest_pre_serve_request', function( $value ) {
+    header( 'Access-Control-Allow-Origin: *' );
+    return $value;
+  });
+}
+add_action( 'rest_api_init', 'my_customize_rest_cors', 15 );
+?>
+```
+- Example:
+```
+header( 'Access-Control-Allow-Origin: https://example.com' );
+```
 
- - [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/)
- - [ACF to REST API](https://wordpress.org/plugins/acf-to-rest-api/)
- - [Jetpack by WordPress.com](https://wordpress.org/plugins/jetpack/)
- - [No Category Base (WPML)](https://wordpress.org/plugins/no-category-base-wpml/)
- - [WP REST API Menus](https://ja.wordpress.org/plugins/wp-api-menus/)
+
+# Recommended plug-ins
+- [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/)
+- [ACF to REST API](https://wordpress.org/plugins/acf-to-rest-api/)
